@@ -31,7 +31,8 @@ end
 class TicTacToe
   include TerminalInterface
 
-  attr_reader :board, :possibilities, :player_one_name, :player_two_name, :player_one_symbol, :player_two_symbol, :player_one_score, :player_two_score
+  attr_accessor :turn, :board, :possibilities
+  attr_reader :player_one_name, :player_two_name, :player_one_symbol, :player_two_symbol, :player_one_score, :player_two_score
 
   def initialize(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
     @player_one_name = player_one_name
@@ -46,12 +47,37 @@ class TicTacToe
     @possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
                A2: 'A2', B2: 'B2', C2: 'C2',
                A3: 'A3', B3: 'B3', C3: 'C3' }
+    @turn = player_one_name
   end
 
   def display_game
     display_title
     display_board_and_moves
     display_score
+  end
+
+  def space_empty?(play)
+    board[play.to_sym] == ' '
+  end
+
+  def update_board(play, player_symbol)
+    board[play.to_sym] = player_symbol
+
+    possibilities[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
+  end
+
+  def play_round
+    puts "#{turn}, make your move."
+
+    play = gets.chomp.upcase
+    until space_empty?(play)
+      puts 'Please choose an available space!'
+      play = gets.chomp.upcase
+    end
+
+    player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
+    update_board(play, player_symbol)
+    display_game
   end
 end
 
@@ -77,6 +103,7 @@ def intro
   new_match = TicTacToe.new(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
 
   new_match.display_game
+  new_match.play_round
 end
 
 intro
