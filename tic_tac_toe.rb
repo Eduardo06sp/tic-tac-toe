@@ -31,8 +31,8 @@ end
 class TicTacToe
   include TerminalInterface
 
-  attr_accessor :turn, :board, :possibilities
-  attr_reader :player_one_name, :player_two_name, :player_one_symbol, :player_two_symbol, :player_one_score, :player_two_score
+  attr_accessor :turn, :board, :possibilities, :player_one_score, :player_two_score
+  attr_reader :player_one_name, :player_two_name, :player_one_symbol, :player_two_symbol
 
   def initialize(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
     @player_one_name = player_one_name
@@ -92,7 +92,6 @@ class TicTacToe
       sym.to_s
     end
 
-    p player_symbols_array
     win_possibilities.any? do |possibility|
       possibility.all? { |el| player_symbols_array.include?(el) }
     end
@@ -102,7 +101,40 @@ class TicTacToe
     self.turn = turn == player_one_name ? player_two_name : player_one_name
   end
 
-  def play_round
+  def end_match(player)
+    if player == player_one_name
+      self.player_one_score += 1
+    else
+      self.player_two_score += 1
+    end
+
+    display_game
+
+    puts "Congratulations #{player}, you've won!"
+    puts 'Rematch?'
+    input = gets.chomp.strip
+
+    until %w[yes y no n].include?(input)
+      puts 'Please enter yes or no.'
+      input = gets.chomp.strip
+    end
+
+    if %w[yes y].include?(input)
+      self.board = { A1: ' ', B1: ' ', C1: ' ',
+                 A2: ' ', B2: ' ', C2: ' ',
+                 A3: ' ', B3: ' ', C3: ' ' }
+
+      self.possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
+                             A2: 'A2', B2: 'B2', C2: 'C2',
+                             A3: 'A3', B3: 'B3', C3: 'C3' }
+      display_game
+      play_rounds
+    else
+      puts 'Have a wonderful day! Thanks for playing :}'
+    end
+  end
+
+  def play_rounds
     puts "#{turn}, make your move."
 
     play = gets.chomp.upcase
@@ -113,14 +145,13 @@ class TicTacToe
 
     player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
     update_board(play, player_symbol)
-    display_game
 
     if winner?(player_symbol)
-      puts 'WE GOT A WINNER!'
       end_match(turn)
     else
+      display_game
       change_turn
-      play_round
+      play_rounds
     end
   end
 end
@@ -147,7 +178,7 @@ def intro
   new_match = TicTacToe.new(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
 
   new_match.display_game
-  new_match.play_round
+  new_match.play_rounds
 end
 
 intro
