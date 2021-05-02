@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TerminalInterface contains styling used to display the banner, gameboard, possibilities board and score
 module TerminalInterface
   def display_title
