@@ -90,9 +90,7 @@ class TicTacToe
     player_spaces_symbols = player_spaces_array.select do |el|
       el.is_a?(Symbol)
     end
-    player_symbols_array = player_spaces_symbols.map do |sym|
-      sym.to_s
-    end
+    player_symbols_array = player_spaces_symbols.map(&:to_s)
 
     win_possibilities.any? do |possibility|
       possibility.all? { |el| player_symbols_array.include?(el) }
