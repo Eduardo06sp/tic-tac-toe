@@ -144,7 +144,9 @@ class TicTacToe
   end
 
   def play_rounds
-    puts "#{turn}, make your move."
+    player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
+
+    puts "(#{player_symbol}) #{turn}, make your move."
 
     play = gets.chomp.upcase
     until space_empty?(play)
@@ -152,7 +154,6 @@ class TicTacToe
       play = gets.chomp.upcase
     end
 
-    player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
     update_board(play, player_symbol)
 
     if winner?(player_symbol)
