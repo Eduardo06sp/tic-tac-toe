@@ -171,7 +171,7 @@ class TicTacToe
 end
 
 def intro
-  puts 'Welcome! You will be playing Tic-Tac-Toe in the command line. This is set up for a human vs human.'
+  puts 'You may type in lower case.'
   puts "Please enter player one's name (or just press enter to use the default)"
 
   player_one_name = gets.chomp
