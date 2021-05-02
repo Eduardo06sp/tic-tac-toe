@@ -97,6 +97,12 @@ class TicTacToe
     end
   end
 
+  def tie?
+    board.none? do |space|
+      space[1] == ' '
+    end
+  end
+
   def change_turn
     self.turn = turn == player_one_name ? player_two_name : player_one_name
   end
@@ -111,6 +117,9 @@ class TicTacToe
     display_game
 
     puts "Congratulations #{player}, you've won!"
+  end
+
+  def rematch
     puts 'Rematch?'
     input = gets.chomp.strip
 
@@ -148,6 +157,11 @@ class TicTacToe
 
     if winner?(player_symbol)
       end_match(turn)
+      rematch
+    elsif tie?
+      display_game
+      puts "It's a tie!"
+      rematch
     else
       display_game
       change_turn
