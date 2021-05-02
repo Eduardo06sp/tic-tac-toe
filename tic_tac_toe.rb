@@ -28,6 +28,8 @@ module TerminalInterface
   end
 end
 
+# TicTacToe creates a new object representing a new match. Its instance variables are updated throughout the game.
+# Its board and possibilities are reset if the user decides to rematch.
 class TicTacToe
   include TerminalInterface
 
