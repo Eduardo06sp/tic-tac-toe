@@ -66,6 +66,42 @@ class TicTacToe
     possibilities[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
   end
 
+  def winner?(player_symbol)
+    win_possibilities = [
+      %w[A1 B1 C1],
+      %w[A2 B2 C2],
+      %w[A3 B3 C3],
+
+      %w[A1 A2 A3],
+      %w[B1 B2 B3],
+      %w[C1 C2 C3],
+
+      %w[A1 B2 C3],
+      %w[A3 B2 C1]
+    ]
+
+    player_spaces_hash = board.select do |space|
+      board[space] == player_symbol
+    end
+
+    player_spaces_array = player_spaces_hash.to_a.flatten
+    player_spaces_symbols = player_spaces_array.select do |el|
+      el.is_a?(Symbol)
+    end
+    player_symbols_array = player_spaces_symbols.map do |sym|
+      sym.to_s
+    end
+
+    p player_symbols_array
+    win_possibilities.any? do |possibility|
+      possibility.all? { |el| player_symbols_array.include?(el) }
+    end
+  end
+
+  def change_turn
+    self.turn = turn == player_one_name ? player_two_name : player_one_name
+  end
+
   def play_round
     puts "#{turn}, make your move."
 
@@ -78,6 +114,14 @@ class TicTacToe
     player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
     update_board(play, player_symbol)
     display_game
+
+    if winner?(player_symbol)
+      puts 'WE GOT A WINNER!'
+      end_match(turn)
+    else
+      change_turn
+      play_round
+    end
   end
 end
 
