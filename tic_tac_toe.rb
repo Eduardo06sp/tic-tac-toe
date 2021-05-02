@@ -5,9 +5,8 @@ module TerminalInterface
     \n-----------------------------------------------------"
   end
 
-  def display_board_and_moves
-    game_board =
-      "\t    |   |        |       |    | \n" \
+  def display_board
+    puts "\t    |   |        |       |    | \n" \
       "\t  #{board[:A1]} | #{board[:B1]} | #{board[:C1]}      |    " \
       "#{possibilities[:A1]} | #{possibilities[:B1]} | #{possibilities[:C1]}\n" \
       "\t----|---|----    |   ----|----|----\n" \
@@ -17,8 +16,6 @@ module TerminalInterface
       "\t  #{board[:A3]} | #{board[:B3]} | #{board[:C3]}      |    " \
       "#{possibilities[:A3]} | #{possibilities[:B3]} | #{possibilities[:C3]}\n" \
       "\t    |   |        |       |    | "
-
-    puts game_board
   end
 
   def display_score
@@ -52,7 +49,7 @@ class TicTacToe
 
   def display_game
     display_title
-    display_board_and_moves
+    display_board
     display_score
   end
 
