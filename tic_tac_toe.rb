@@ -121,6 +121,7 @@ class TicTacToe
 
   def rematch
     puts 'Rematch?'
+    puts 'You may type in yes/y/no/n.'
     input = gets.chomp.strip
 
     until %w[yes y no n].include?(input)
