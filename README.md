@@ -1,4 +1,4 @@
-# TIC-TAC-TOE
+# Tic-Tac-Toe
 
 This particular game of tic-tac-toe is played entirely in the terminal. There is a basic interface that displays the board in between turns. Each player's score is tracked in between matches.
 
