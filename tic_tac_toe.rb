@@ -3,8 +3,8 @@
 # TerminalInterface contains styling used to display the banner, gameboard, possibilities board and score
 module TerminalInterface
   def display_title
-    puts "----------------------------------------------------------
-    \n------------ TIC - TAC - TOE -----
+    puts "-----------------------------------------------------
+    \n----------------- TIC - TAC - TOE -------------------
     \n-----------------------------------------------------"
   end
 
@@ -22,9 +22,9 @@ module TerminalInterface
   end
 
   def display_score
-    puts "-----------------------------------------------------------
-    \n ------Score: ---- #{player_one_name}: #{player_one_score} -------- #{player_two_name}: #{player_two_score} ------
-    \n ---------------------------------------------------------"
+    puts "-----------------------------------------------------
+    \n---- Score: --- #{player_one_name}: #{player_one_score} -- #{player_two_name}: #{player_two_score} ------
+    \n-----------------------------------------------------"
   end
 end
 
