@@ -42,8 +42,8 @@ class TicTacToe
                A2: ' ', B2: ' ', C2: ' ',
                A3: ' ', B3: ' ', C3: ' ' }
     @possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
-               A2: 'A2', B2: 'B2', C2: 'C2',
-               A3: 'A3', B3: 'B3', C3: 'C3' }
+                       A2: 'A2', B2: 'B2', C2: 'C2',
+                       A3: 'A3', B3: 'B3', C3: 'C3' }
     @turn = player_one_name
   end
 
