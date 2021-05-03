@@ -14,5 +14,3 @@ Among the necessary skills required to complete this project, I learned about:
 * Creating **predicate methods** instead of resorting to repeated `if..else` statements
 * **Looping through nested arrays** (to check if a user has won in this case)
 * Using a **linter** to help improve code legibility
-
-Although I began to think about object-oriented design, there is room for improvement.
