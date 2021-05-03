@@ -177,7 +177,7 @@ def intro
   puts "Please enter player one's name (or just press enter to use the default)"
 
   player_one_name = gets.chomp
-  player_one_name = player_one_name == '' ? 'player_one' : player_one_name
+  player_one_name = player_one_name == '' ? 'Player_one' : player_one_name
 
   player_one_symbol = nil
   until %w[X O].include?(player_one_symbol)
@@ -187,7 +187,7 @@ def intro
 
   puts "Enter player two's name (or press enter to use the default)"
   player_two_name = gets.chomp
-  player_two_name = player_two_name == '' ? 'player_two' : player_two_name
+  player_two_name = player_two_name == '' ? 'Player_two' : player_two_name
 
   player_two_symbol = player_one_symbol == 'X' ? 'O' : 'X'
 
