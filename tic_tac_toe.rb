@@ -169,8 +169,8 @@ class Player
   end
 end
 
+# GameBoard class creates new instances of a game board (hash) and its methods
 class GameBoard
-
   attr_accessor :board
 
   def initialize
