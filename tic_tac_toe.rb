@@ -188,6 +188,8 @@ class GameBoard
   end
 end
 
+# Possibilities extends GameBoard class and its layout contains a matrix of possible moves
+# In TicTacToe class, its values are updated at the same time the main game board is updated
 class Possibilities < GameBoard
   attr_accessor :board
 
