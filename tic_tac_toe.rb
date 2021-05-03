@@ -37,37 +37,17 @@ end
 # TicTacToe creates a new object representing a new match. Its instance variables are updated throughout the game.
 # Its board and possibilities are reset if the user decides to rematch.
 class TicTacToe
-  include TerminalInterface
-
   attr_accessor :turn, :board, :possibilities
   attr_reader :p1, :p2
 
-  def initialize(p1, p2)
+  def initialize(p1, p2, game_board)
     @p1 = p1
     @p2 = p2
-    @board = { A1: ' ', B1: ' ', C1: ' ',
-               A2: ' ', B2: ' ', C2: ' ',
-               A3: ' ', B3: ' ', C3: ' ' }
+    @game_board = game_board
     @possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
                        A2: 'A2', B2: 'B2', C2: 'C2',
                        A3: 'A3', B3: 'B3', C3: 'C3' }
     @turn = p1.name
-  end
-
-  def display_game
-    display_title
-    display_board
-    display_score
-  end
-
-  def space_empty?(play)
-    board[play.to_sym] == ' '
-  end
-
-  def update_board(play, player_symbol)
-    board[play.to_sym] = player_symbol
-
-    possibilities[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
   end
 
   def winner?(player_symbol)
@@ -84,8 +64,8 @@ class TicTacToe
       %w[A3 B2 C1]
     ]
 
-    player_spaces_hash = board.select do |space|
-      board[space] == player_symbol
+    player_spaces_hash = game_board.board.select do |space|
+      game_board.board[space] == player_symbol
     end
 
     player_spaces_array = player_spaces_hash.to_a.flatten
@@ -100,7 +80,7 @@ class TicTacToe
   end
 
   def tie?
-    board.none? do |space|
+    game_board.board.none? do |space|
       space[1] == ' '
     end
   end
@@ -132,7 +112,7 @@ class TicTacToe
     end
 
     if %w[yes y].include?(input)
-      self.board = { A1: ' ', B1: ' ', C1: ' ',
+      game_board.board = { A1: ' ', B1: ' ', C1: ' ',
                      A2: ' ', B2: ' ', C2: ' ',
                      A3: ' ', B3: ' ', C3: ' ' }
 
@@ -157,7 +137,7 @@ class TicTacToe
       play = gets.chomp.upcase
     end
 
-    update_board(play, player_symbol)
+    game_board.update(play, player_symbol)
 
     if winner?(player_symbol)
       end_match(turn)
@@ -185,6 +165,34 @@ class Player
   end
 end
 
+class GameBoard
+  include TerminalInterface
+
+  attr_accessor :board
+
+  def initialize
+    @board = { A1: ' ', B1: ' ', C1: ' ',
+               A2: ' ', B2: ' ', C2: ' ',
+               A3: ' ', B3: ' ', C3: ' ' }
+  end
+
+  def display_game
+    display_title
+    display_board
+    display_score
+  end
+
+  def space_empty?(play)
+    board[play.to_sym] == ' '
+  end
+
+  def update(play, player_symbol)
+    board[play.to_sym] = player_symbol
+
+    possibilities[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
+  end
+end
+
 def intro
   puts 'You may type in lower case.'
   puts "Please enter player one's name (or just press enter to use the default)"
@@ -206,9 +214,10 @@ def intro
 
   p1 = Player.new(p1_name, p1_symbol)
   p2 = Player.new(p2_name, p2_symbol)
-  new_match = TicTacToe.new(p1, p2)
+  new_board = GameBoard.new
+  new_match = TicTacToe.new(p1, p2, new_board)
 
-  new_match.display_game
+  new_board.display_game
   new_match.play_rounds
 end
 
