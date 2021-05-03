@@ -157,6 +157,7 @@ class TicTacToe
   end
 end
 
+# Player class creates objects that track player name and their symbol ("X" or "O")
 class Player
   attr_accessor :score
   attr_reader :name, :symbol
