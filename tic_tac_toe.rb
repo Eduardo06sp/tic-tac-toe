@@ -5,6 +5,7 @@
 # TicTacToe, Player, GameBoard, Possibilities < Gameboard
 # maybe even a play ROUND class??? (overkill?)
 # REPLY TO ROSE WHEN DONE!!!
+# MAKE METHODS PRIVATE AS MUCH AS YOU CAN
 
 # TerminalInterface contains styling used to display the banner, gameboard, possibilities board and score
 module TerminalInterface
@@ -113,15 +114,12 @@ class TicTacToe
     end
 
     if %w[yes y].include?(input)
-      game_board.board = { A1: ' ', B1: ' ', C1: ' ',
-                     A2: ' ', B2: ' ', C2: ' ',
-                     A3: ' ', B3: ' ', C3: ' ' }
+      new_possibilities = Possibilities.new
+      new_board = GameBoard.new
 
-      self.possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
-                             A2: 'A2', B2: 'B2', C2: 'C2',
-                             A3: 'A3', B3: 'B3', C3: 'C3' }
-      display_game
-      play_rounds
+      new_match = TicTacToe.new(p1, p2, new_board, new_possibilities)
+      new_match.display_game
+      new_match.play_rounds
     else
       puts 'Have a wonderful day! Thanks for playing :}'
     end
