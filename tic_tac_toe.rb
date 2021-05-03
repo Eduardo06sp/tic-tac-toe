@@ -60,6 +60,36 @@ class TicTacToe
     display_score
   end
 
+  def play_rounds
+    player_symbol = turn == p1.name ? p1.symbol : p2.symbol
+
+    puts "(#{player_symbol}) #{turn}, make your move."
+
+    play = gets.chomp.upcase
+    until game_board.space_empty?(play)
+      puts 'Please choose an available space!'
+      play = gets.chomp.upcase
+    end
+
+    game_board.update(play, player_symbol)
+    possibilities.update(play, player_symbol)
+
+    if winner?(player_symbol)
+      end_match(turn)
+      rematch
+    elsif tie?
+      display_game
+      puts "It's a tie!"
+      rematch
+    else
+      display_game
+      change_turn
+      play_rounds
+    end
+  end
+
+  private
+
   def winner?(player_symbol)
     win_possibilities = [
       %w[A1 B1 C1],
@@ -125,34 +155,6 @@ class TicTacToe
       new_match.play_rounds
     else
       puts 'Have a wonderful day! Thanks for playing :}'
-    end
-  end
-
-  def play_rounds
-    player_symbol = turn == p1.name ? p1.symbol : p2.symbol
-
-    puts "(#{player_symbol}) #{turn}, make your move."
-
-    play = gets.chomp.upcase
-    until game_board.space_empty?(play)
-      puts 'Please choose an available space!'
-      play = gets.chomp.upcase
-    end
-
-    game_board.update(play, player_symbol)
-    possibilities.update(play, player_symbol)
-
-    if winner?(player_symbol)
-      end_match(turn)
-      rematch
-    elsif tie?
-      display_game
-      puts "It's a tie!"
-      rematch
-    else
-      display_game
-      change_turn
-      play_rounds
     end
   end
 end
