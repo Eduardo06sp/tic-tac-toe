@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# REFACTOR: Probably wanna add MORE CLASSES
+# Possibilities can inherit from GameBoard
+# TicTacToe, Player, GameBoard, Possibilities < Gameboard
+# maybe even a play ROUND class??? (overkill?)
+# REPLY TO ROSE WHEN DONE!!!
+
 # TerminalInterface contains styling used to display the banner, gameboard, possibilities board and score
 module TerminalInterface
   def display_title
@@ -23,7 +29,7 @@ module TerminalInterface
 
   def display_score
     puts "-----------------------------------------------------
-    \n---- Score: --- #{player_one_name}: #{player_one_score} -- #{player_two_name}: #{player_two_score} ------
+    \n---- Score: --- #{p1.name}: #{p1.score} -- #{p2.name}: #{p2.score} ------
     \n-----------------------------------------------------"
   end
 end
@@ -33,23 +39,19 @@ end
 class TicTacToe
   include TerminalInterface
 
-  attr_accessor :turn, :board, :possibilities, :player_one_score, :player_two_score
-  attr_reader :player_one_name, :player_two_name, :player_one_symbol, :player_two_symbol
+  attr_accessor :turn, :board, :possibilities
+  attr_reader :p1, :p2
 
-  def initialize(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
-    @player_one_name = player_one_name
-    @player_two_name = player_two_name
-    @player_one_symbol = player_one_symbol
-    @player_two_symbol = player_two_symbol
-    @player_one_score = 0
-    @player_two_score = 0
+  def initialize(p1, p2)
+    @p1 = p1
+    @p2 = p2
     @board = { A1: ' ', B1: ' ', C1: ' ',
                A2: ' ', B2: ' ', C2: ' ',
                A3: ' ', B3: ' ', C3: ' ' }
     @possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
                        A2: 'A2', B2: 'B2', C2: 'C2',
                        A3: 'A3', B3: 'B3', C3: 'C3' }
-    @turn = player_one_name
+    @turn = p1.name
   end
 
   def display_game
@@ -104,14 +106,14 @@ class TicTacToe
   end
 
   def change_turn
-    self.turn = turn == player_one_name ? player_two_name : player_one_name
+    self.turn = turn == p1.name ? p2.name : p1.name
   end
 
   def end_match(player)
-    if player == player_one_name
-      self.player_one_score += 1
+    if player == p1.name
+      p1.score += 1
     else
-      self.player_two_score += 1
+      p2.score += 1
     end
 
     display_game
@@ -145,7 +147,7 @@ class TicTacToe
   end
 
   def play_rounds
-    player_symbol = turn == player_one_name ? player_one_symbol : player_two_symbol
+    player_symbol = turn == p1.name ? p1.symbol : p2.symbol
 
     puts "(#{player_symbol}) #{turn}, make your move."
 
@@ -172,26 +174,39 @@ class TicTacToe
   end
 end
 
+class Player
+  attr_accessor :score
+  attr_reader :name, :symbol
+
+  def initialize(name, symbol)
+    @name = name
+    @symbol = symbol
+    @score = 0
+  end
+end
+
 def intro
   puts 'You may type in lower case.'
   puts "Please enter player one's name (or just press enter to use the default)"
 
-  player_one_name = gets.chomp
-  player_one_name = player_one_name == '' ? 'Player_one' : player_one_name
+  p1_name = gets.chomp
+  p1_name = p1_name == '' ? 'Player_one' : p1_name
 
-  player_one_symbol = nil
-  until %w[X O].include?(player_one_symbol)
-    puts "#{player_one_name}, choose \"X\" or \"O\"!"
-    player_one_symbol = gets.chomp.upcase
+  p1_symbol = nil
+  until %w[X O].include?(p1_symbol)
+    puts "#{p1_name}, choose \"X\" or \"O\"!"
+    p1_symbol = gets.chomp.upcase
   end
 
   puts "Enter player two's name (or press enter to use the default)"
-  player_two_name = gets.chomp
-  player_two_name = player_two_name == '' ? 'Player_two' : player_two_name
+  p2_name = gets.chomp
+  p2_name = p2_name == '' ? 'Player_two' : p2_name
 
-  player_two_symbol = player_one_symbol == 'X' ? 'O' : 'X'
+  p2_symbol = p1_symbol == 'X' ? 'O' : 'X'
 
-  new_match = TicTacToe.new(player_one_name, player_two_name, player_one_symbol, player_two_symbol)
+  p1 = Player.new(p1_name, p1_symbol)
+  p2 = Player.new(p2_name, p2_symbol)
+  new_match = TicTacToe.new(p1, p2)
 
   new_match.display_game
   new_match.play_rounds
