@@ -73,15 +73,10 @@ class TicTacToe
     player_spaces_hash = game_board.board.select do |space|
       game_board.board[space] == player_symbol
     end
-
-    player_spaces_array = player_spaces_hash.to_a.flatten
-    player_spaces_symbols = player_spaces_array.select do |el|
-      el.is_a?(Symbol)
-    end
-    player_symbols_array = player_spaces_symbols.map(&:to_s)
+    player_moves = player_spaces_hash.keys.map(&:to_s)
 
     win_possibilities.any? do |possibility|
-      possibility.all? { |el| player_symbols_array.include?(el) }
+      possibility.all? { |el| player_moves.include?(el) }
     end
   end
 
