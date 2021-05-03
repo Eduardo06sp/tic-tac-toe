@@ -90,9 +90,9 @@ class TicTacToe
 
   def end_match(player)
     if player == p1.name
-      p1.score += 1
+      p1.add_point
     else
-      p2.score += 1
+      p2.add_point
     end
 
     display_game

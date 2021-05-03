@@ -10,4 +10,8 @@ class Player
     @symbol = symbol
     @score = 0
   end
+
+  def add_point
+    self.score += 1
+  end
 end
