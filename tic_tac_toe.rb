@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-# REFACTOR: Probably wanna add MORE CLASSES
-# Possibilities can inherit from GameBoard
-# TicTacToe, Player, GameBoard, Possibilities < Gameboard
-# maybe even a play ROUND class??? (overkill?)
-# REPLY TO ROSE WHEN DONE!!!
-# MAKE METHODS PRIVATE AS MUCH AS YOU CAN
-
 # TerminalInterface contains styling used to display the banner, gameboard, possibilities board and score
 module TerminalInterface
   def display_title
