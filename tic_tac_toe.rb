@@ -16,14 +16,14 @@ module TerminalInterface
 
   def display_board
     puts "\t    |   |        |       |    | \n" \
-      "\t  #{board[:A1]} | #{board[:B1]} | #{board[:C1]}      |    " \
-      "#{possibilities[:A1]} | #{possibilities[:B1]} | #{possibilities[:C1]}\n" \
+      "\t  #{game_board.board[:A1]} | #{game_board.board[:B1]} | #{game_board.board[:C1]}      |    " \
+      "#{possibilities.board[:A1]} | #{possibilities.board[:B1]} | #{possibilities.board[:C1]}\n" \
       "\t----|---|----    |   ----|----|----\n" \
-      "\t  #{board[:A2]} | #{board[:B2]} | #{board[:C2]}      |    " \
-      "#{possibilities[:A2]} | #{possibilities[:B2]} | #{possibilities[:C2]}\n" \
+      "\t  #{game_board.board[:A2]} | #{game_board.board[:B2]} | #{game_board.board[:C2]}      |    " \
+      "#{possibilities.board[:A2]} | #{possibilities.board[:B2]} | #{possibilities.board[:C2]}\n" \
       "\t----|---|----    |   ----|----|----\n" \
-      "\t  #{board[:A3]} | #{board[:B3]} | #{board[:C3]}      |    " \
-      "#{possibilities[:A3]} | #{possibilities[:B3]} | #{possibilities[:C3]}\n" \
+      "\t  #{game_board.board[:A3]} | #{game_board.board[:B3]} | #{game_board.board[:C3]}      |    " \
+      "#{possibilities.board[:A3]} | #{possibilities.board[:B3]} | #{possibilities.board[:C3]}\n" \
       "\t    |   |        |       |    | "
   end
 
@@ -37,17 +37,23 @@ end
 # TicTacToe creates a new object representing a new match. Its instance variables are updated throughout the game.
 # Its board and possibilities are reset if the user decides to rematch.
 class TicTacToe
-  attr_accessor :turn, :board, :possibilities
+  include TerminalInterface
+
+  attr_accessor :turn, :game_board, :possibilities
   attr_reader :p1, :p2
 
-  def initialize(p1, p2, game_board)
+  def initialize(p1, p2, game_board, possibilities)
     @p1 = p1
     @p2 = p2
     @game_board = game_board
-    @possibilities = { A1: 'A1', B1: 'B1', C1: 'C1',
-                       A2: 'A2', B2: 'B2', C2: 'C2',
-                       A3: 'A3', B3: 'B3', C3: 'C3' }
+    @possibilities = possibilities
     @turn = p1.name
+  end
+
+  def display_game
+    display_title
+    display_board
+    display_score
   end
 
   def winner?(player_symbol)
@@ -132,12 +138,13 @@ class TicTacToe
     puts "(#{player_symbol}) #{turn}, make your move."
 
     play = gets.chomp.upcase
-    until space_empty?(play)
+    until game_board.space_empty?(play)
       puts 'Please choose an available space!'
       play = gets.chomp.upcase
     end
 
     game_board.update(play, player_symbol)
+    possibilities.update(play, player_symbol)
 
     if winner?(player_symbol)
       end_match(turn)
@@ -166,7 +173,6 @@ class Player
 end
 
 class GameBoard
-  include TerminalInterface
 
   attr_accessor :board
 
@@ -176,20 +182,27 @@ class GameBoard
                A3: ' ', B3: ' ', C3: ' ' }
   end
 
-  def display_game
-    display_title
-    display_board
-    display_score
-  end
-
   def space_empty?(play)
     board[play.to_sym] == ' '
   end
 
   def update(play, player_symbol)
     board[play.to_sym] = player_symbol
+  end
+end
 
-    possibilities[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
+class Possibilities < GameBoard
+  attr_accessor :board
+
+  def initialize
+    super
+    @board = { A1: 'A1', B1: 'B1', C1: 'C1',
+               A2: 'A2', B2: 'B2', C2: 'C2',
+               A3: 'A3', B3: 'B3', C3: 'C3' }
+  end
+
+  def update(play, player_symbol)
+    board[play.to_sym] = %i[C1 C2 C3].include?(play.to_sym) ? player_symbol.to_s : " #{player_symbol}"
   end
 end
 
@@ -214,10 +227,11 @@ def intro
 
   p1 = Player.new(p1_name, p1_symbol)
   p2 = Player.new(p2_name, p2_symbol)
+  new_possibilities = Possibilities.new
   new_board = GameBoard.new
-  new_match = TicTacToe.new(p1, p2, new_board)
+  new_match = TicTacToe.new(p1, p2, new_board, new_possibilities)
 
-  new_board.display_game
+  new_match.display_game
   new_match.play_rounds
 end
 
