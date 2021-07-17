@@ -10,7 +10,7 @@ describe TicTacToe do
     let(:board) { GameBoard.new }
     let(:possibilities) { Possibilities.new }
     let(:player1) { Player.new('p1', 'X') }
-    let(:player2) { Player.new('p2', 'X') }
+    let(:player2) { Player.new('p2', 'O') }
     subject(:new_game) { described_class.new(player1, player2, board, possibilities) }
 
     context 'when player performs a winning move'
