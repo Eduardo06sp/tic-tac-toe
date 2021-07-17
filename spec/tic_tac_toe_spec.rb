@@ -45,6 +45,10 @@ describe TicTacToe do
     end
 
     it 'returns true when board reads X X X vertically' do
+      vertical_win = { A1: 'X', B1: ' ', C1: ' ',
+                       A2: 'X', B2: ' ', C2: ' ',
+                       A3: 'X', B3: ' ', C3: ' ' }
+      board.instance_variable_set(:@board, vertical_win)
     end
   end
 end
