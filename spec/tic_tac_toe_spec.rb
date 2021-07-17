@@ -43,5 +43,8 @@ describe TicTacToe do
       expect(new_game).to receive(:end_match)
       new_game.play_rounds
     end
+
+    it 'returns true when board reads X X X vertically' do
+    end
   end
 end
