@@ -23,6 +23,10 @@ describe TicTacToe do
     end
 
     it 'returns true when board reads X X X across top row' do
+      horizontal_win = { A1: 'X', B1: 'X', C1: 'X',
+                         A2: ' ', B2: ' ', C2: ' ',
+                         A3: ' ', B3: ' ', C3: ' ' }
+      board.instance_variable_set(:@board, horizontal_win)
     end
   end
 end
