@@ -66,4 +66,8 @@ describe TicTacToe do
       new_game.play_rounds
     end
   end
+
+  describe '#tie?' do
+    context 'when neither player wins'
+  end
 end
