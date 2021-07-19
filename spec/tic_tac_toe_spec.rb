@@ -60,6 +60,10 @@ describe TicTacToe do
                        A2: 'X', B2: 'X', C2: 'X',
                        A3: 'X', B3: 'O', C3: 'O' }
       board.instance_variable_set(:@board, winning_move)
+
+      allow(new_game).to receive(:rematch)
+      expect(new_game).to receive(:end_match)
+      new_game.play_rounds
     end
   end
 end
