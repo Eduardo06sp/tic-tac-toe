@@ -86,6 +86,10 @@ describe TicTacToe do
 
   describe '#play_rounds' do
     it 'runs until game is a tie / there is a winner' do
+      unfinished_game = { A1: ' ', B1: ' ', C1: ' ',
+                          A2: ' ', B2: 'X', C2: ' ',
+                          A3: ' ', B3: ' ', C3: ' ' }
+      board.instance_variable_set(:@board, unfinished_game)
     end
   end
 end
