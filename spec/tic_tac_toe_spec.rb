@@ -54,5 +54,8 @@ describe TicTacToe do
       expect(new_game).to receive(:end_match)
       new_game.play_rounds
     end
+
+    it 'returns true when last possible move results in win' do
+    end
   end
 end
