@@ -90,6 +90,11 @@ describe TicTacToe do
                           A2: ' ', B2: 'X', C2: ' ',
                           A3: ' ', B3: ' ', C3: ' ' }
       board.instance_variable_set(:@board, unfinished_game)
+
+      allow(new_game).to receive(:display_game)
+      allow(new_game).to receive(:change_turn)
+      expect(new_game).to receive(:play_rounds)
+      new_game.play_rounds
     end
   end
 end
