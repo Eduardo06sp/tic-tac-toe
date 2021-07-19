@@ -76,6 +76,11 @@ describe TicTacToe do
                     A2: 'X', B2: 'X', C2: 'O',
                     A3: 'O', B3: 'X', C3: 'O' }
       board.instance_variable_set(:@board, tied_game)
+
+      allow(new_game).to receive(:display_game)
+      allow(new_game).to receive(:rematch)
+      expect(new_game).to receive(:puts).with("It's a tie!")
+      new_game.play_rounds
     end
   end
 end
