@@ -56,6 +56,10 @@ describe TicTacToe do
     end
 
     it 'returns true when last possible move results in win' do
+      winning_move = { A1: 'X', B1: 'O', C1: 'O',
+                       A2: 'X', B2: 'X', C2: 'X',
+                       A3: 'X', B3: 'O', C3: 'O' }
+      board.instance_variable_set(:@board, winning_move)
     end
   end
 end
