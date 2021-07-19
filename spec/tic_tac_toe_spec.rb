@@ -72,6 +72,10 @@ describe TicTacToe do
     context 'when neither player wins'
 
     it 'returns true' do
+      tied_game = { A1: 'X', B1: 'O', C1: 'X',
+                    A2: 'X', B2: 'X', C2: 'O',
+                    A3: 'O', B3: 'X', C3: 'O' }
+      board.instance_variable_set(:@board, tied_game)
     end
   end
 end
