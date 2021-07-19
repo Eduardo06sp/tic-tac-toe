@@ -83,4 +83,7 @@ describe TicTacToe do
       new_game.play_rounds
     end
   end
+
+  describe '#play_rounds' do
+  end
 end
