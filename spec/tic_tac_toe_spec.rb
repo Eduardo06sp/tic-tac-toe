@@ -85,5 +85,7 @@ describe TicTacToe do
   end
 
   describe '#play_rounds' do
+    it 'runs until game is a tie / there is a winner' do
+    end
   end
 end
