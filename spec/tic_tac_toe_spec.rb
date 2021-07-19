@@ -70,5 +70,8 @@ describe TicTacToe do
 
   describe '#tie?' do
     context 'when neither player wins'
+
+    it 'returns true' do
+    end
   end
 end
